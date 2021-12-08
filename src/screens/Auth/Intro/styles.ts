@@ -11,9 +11,10 @@ export const Container = styled.View`
   padding: 20px;
   background: ${({ theme }) => theme.colors.BACKGROUND};
 `;
+
 export const Title = styled(Animatable.Text).attrs({
   animation: 'bounceInLeft',
-  delay: 1000,
+  delay: 800,
   duration: 1000,
 })`
   font-size: ${RFValue(24)}px;
@@ -24,8 +25,7 @@ export const Title = styled(Animatable.Text).attrs({
 
 export const Logo = styled(TypeWriter).attrs({
   typing: 1,
-  initialDelay: 1600,
-  minDelay: 300,
+  initialDelay: 1500,
   fixed: true,
 })`
   font-size: ${RFValue(48)}px;
@@ -34,7 +34,11 @@ export const Logo = styled(TypeWriter).attrs({
   color: ${({ theme }) => theme.colors.TITLE};
 `;
 
-export const Span = styled.Text`
+export const Span = styled(Animatable.Text).attrs({
+  animation: 'fadeIn',
+  delay: 1800,
+  duration: 1000,
+})`
   font-size: ${RFValue(14)}px;
   font-family: ${({ theme }) => theme.fonts.REGULAR};
   color: ${({ theme }) => theme.colors.SPAN};
@@ -42,7 +46,11 @@ export const Span = styled.Text`
   text-align: center;
 `;
 
-export const ViewLottie = styled.View`
+export const ViewLottie = styled(Animatable.View).attrs({
+  animation: 'fadeInLeft',
+  delay: 2000,
+  duration: 1000,
+})`
   height: ${RFPercentage(40)}px;
   width: 100%;
 `;

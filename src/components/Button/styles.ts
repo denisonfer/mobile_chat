@@ -1,14 +1,16 @@
+import { createAnimatableComponent } from 'react-native-animatable';
 import { RectButton } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 import styled, { css } from 'styled-components/native';
 
+const ButtonAnimatable = createAnimatableComponent(RectButton);
 interface IButtonProps {
   isOutline?: boolean;
 }
 
-export const Container = styled(RectButton)<IButtonProps>`
+export const Container = styled(ButtonAnimatable)<IButtonProps>`
   height: ${RFValue(46)}px;
   box-shadow: 1px 1px 12px ${({ theme }) => theme.colors.PRIMARY};
 
