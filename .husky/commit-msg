@@ -4,4 +4,4 @@
 npx --no -- commitlint --edit ""
 
 #* Padrão de commit: type(scope?): message
-#* ex.: feat(sign up): serviço de cadastro
+#* ex.: feat(signUp): serviço de cadastro

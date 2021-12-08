@@ -19,6 +19,7 @@
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
     "axios": "^0.24.0",
+    "immer": "^9.0.7",
     "lottie-ios": "3.2.3",
     "lottie-react-native": "^5.0.1",
     "react": "17.0.2",
@@ -38,7 +39,8 @@
     "react-native-typewriter": "^0.7.0",
     "react-native-vector-icons": "^9.0.0",
     "styled-components": "^5.3.3",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "zustand": "^3.6.7"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
