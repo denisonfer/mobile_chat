@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import produce from 'immer';
@@ -11,6 +13,7 @@ type ThemeStore = {
   isDarkTheme: boolean;
   currentTheme: DefaultTheme;
   toggleTheme: () => void;
+  setTheme: (name: string | null | undefined) => void;
 };
 
 export const useThemeStore = create<ThemeStore>(
@@ -26,6 +29,13 @@ export const useThemeStore = create<ThemeStore>(
           produce((state: ThemeStore) => {
             state.isDarkTheme = !state.isDarkTheme;
             state.currentTheme = state.isDarkTheme ? dark : light;
+          }),
+        ),
+      setTheme: name =>
+        set(
+          produce((state: ThemeStore) => {
+            state.currentTheme = name === 'dark' ? dark : light;
+            state.isDarkTheme = name === 'dark';
           }),
         ),
     }),

@@ -21,7 +21,7 @@ if (__DEV__) {
     AsyncStorage.getAllKeys((err, keys) => {
       AsyncStorage.multiGet(keys, (error, stores) => {
         stores.map((result, i, store) => {
-          console.tron.log({ [store[i][0]]: store[i][1] });
+          console.tron.log({ [store[i][0]]: JSON.parse(store[i][1]) });
           return true;
         });
       });

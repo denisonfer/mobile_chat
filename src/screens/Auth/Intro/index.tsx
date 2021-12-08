@@ -2,7 +2,6 @@ import React from 'react';
 
 import giftsAnimates from '#/assets/lotties/presente_animado.json';
 import Button from '#/components/Button';
-import { useThemeStore } from '#/store/theme/useTheme';
 
 import {
   Container,
@@ -14,8 +13,6 @@ import {
 } from './styles';
 
 const IntroScreen: React.FC = function () {
-  const { toggleTheme } = useThemeStore();
-
   return (
     <Container>
       <Title>Bem-vindo ao</Title>
@@ -28,7 +25,7 @@ const IntroScreen: React.FC = function () {
       </ViewLottie>
       <Button
         title="Acessar minha conta"
-        onPress={toggleTheme}
+        onPress={() => {}}
         animation="fadeInDown"
         delay={2500}
         duration={1000}
