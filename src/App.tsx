@@ -12,7 +12,6 @@ const App: React.FC = function () {
 
   useEffect(() => {
     const themeListener = Appearance.addChangeListener(theme => {
-      console.tron.log('theme: ', theme);
       if (!theme.colorScheme) setTheme('light');
       setTheme(theme.colorScheme);
     });

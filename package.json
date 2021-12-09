@@ -38,7 +38,6 @@
     "react-native-svg": "^12.1.1",
     "react-native-typewriter": "^0.7.0",
     "react-native-vector-icons": "^9.0.0",
-    "react-navigation-fluid-transitions": "^0.3.2",
     "styled-components": "^5.3.3",
     "yup": "^0.32.11",
     "zustand": "^3.6.7"

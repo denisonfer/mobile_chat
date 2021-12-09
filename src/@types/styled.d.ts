@@ -16,6 +16,9 @@ declare module 'styled-components' {
       GRADIENT_COLOR_1: string;
       GRADIENT_COLOR_2: string;
       GRADIENT_COLOR_3: string;
+
+      RED: string;
+      GREEN: string;
     };
     fonts: {
       LOGO: string;

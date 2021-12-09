@@ -30,7 +30,6 @@ export const Logo = styled(TypeWriter).attrs({
 })`
   font-size: ${RFValue(48)}px;
   font-family: ${({ theme }) => theme.fonts.LOGO};
-  font-weight: 700;
   color: ${({ theme }) => theme.colors.TITLE};
 `;
 

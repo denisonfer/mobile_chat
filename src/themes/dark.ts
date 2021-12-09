@@ -13,6 +13,9 @@ export default {
     GRADIENT_COLOR_1: '#5200FF',
     GRADIENT_COLOR_2: '#7800D6',
     GRADIENT_COLOR_3: '#E100FF',
+
+    RED: '#FF3333',
+    GREEN: '#00C851',
   },
   fonts: {
     LOGO: 'Lemon-Regular',

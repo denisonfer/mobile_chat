@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useNavigation } from '@react-navigation/native';
+
 import giftsAnimates from '#/assets/lotties/presente_animado.json';
 import Button from '#/components/Button';
 
@@ -13,6 +15,8 @@ import {
 } from './styles';
 
 const IntroScreen: React.FC = function () {
+  const { navigate } = useNavigation();
+
   return (
     <Container>
       <Title>Bem-vindo ao</Title>
@@ -25,7 +29,7 @@ const IntroScreen: React.FC = function () {
       </ViewLottie>
       <Button
         title="Acessar minha conta"
-        onPress={() => {}}
+        onPress={() => navigate('SignInScreen')}
         animation="fadeInDown"
         delay={2500}
         duration={1000}
