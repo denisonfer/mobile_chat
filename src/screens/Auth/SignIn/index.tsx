@@ -8,6 +8,7 @@ import * as yup from 'yup';
 
 import Input from '#/components/Input';
 import { useAuthStore } from '#/store/auth/useAuthStore';
+import { useUserStore } from '#/store/user/useUserStore';
 
 import {
   ButtonForgotPassword,
@@ -45,10 +46,12 @@ const SignInScreen: React.FC = () => {
   const [hidePass, setHidePass] = useState(true);
 
   const { signInRequest, loading } = useAuthStore();
+  const { saveUser } = useUserStore();
 
   const handleSignIn = useCallback(async form => {
     const { email, password } = form;
-    await signInRequest(email, password);
+    const user = await signInRequest(email, password);
+    saveUser(user);
   }, []);
 
   const handleErrors = useCallback(() => {

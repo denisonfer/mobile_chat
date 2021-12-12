@@ -1,21 +1,21 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import produce from 'immer';
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
 
+import { IUser } from '#/shared/interfaces/IUser';
+
 import { authActionsSlice } from './requestSignIn';
 
-export type IAuthInitialStates = {
+export type AuthStates = {
   loading: boolean;
   token: string | null;
   isSigned: boolean;
-  signInRequest: (email: string, password: string) => void;
-  signInSuccess: (token: string) => void;
+  signInRequest: (email: string, password: string) => Promise<IUser>;
   requestFailure: () => void;
 };
 
-export const useAuthStore = create<IAuthInitialStates>(
+export const useAuthStore = create<AuthStates>(
   persist(
     (set, get) => ({
       //* INITIAL STATES
