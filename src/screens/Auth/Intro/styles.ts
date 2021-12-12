@@ -33,6 +33,12 @@ export const Logo = styled(TypeWriter).attrs({
   color: ${({ theme }) => theme.colors.TITLE};
 `;
 
+export const LogoFinal = styled.Text`
+  font-size: ${RFValue(48)}px;
+  font-family: ${({ theme }) => theme.fonts.LOGO};
+  color: ${({ theme }) => theme.colors.PRIMARY};
+`;
+
 export const Span = styled(Animatable.Text).attrs({
   animation: 'fadeIn',
   delay: 1800,

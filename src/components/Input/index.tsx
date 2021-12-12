@@ -1,56 +1,82 @@
-import React from 'react';
+import React, {
+  forwardRef,
+  useCallback,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
+import { Control, Controller } from 'react-hook-form';
 import { TextInputProps } from 'react-native';
 
-import { Container, Icon, InputText } from './styles';
+import { Container, Error, Icon, InputText } from './styles';
 
 interface IInputProps extends TextInputProps {
+  icon: string | null;
+  control: Control;
   name: string;
-  icon?: string;
-  iconType: string;
+  error: string;
+  hidePass: boolean;
+  setHidePass: (value: boolean) => void;
 }
-
-interface IInputValueRef {
-  value: string;
-}
-
 interface IInputRef {
   focus(): void;
 }
 
-const Input: React.ForwardRefRenderFunction<IInputRef, IInputProps> = ({
-  icon,
-  ...rest
-}) => {
+const Input: React.ForwardRefRenderFunction<IInputRef, IInputProps> = (
+  { icon, control, name, error, hidePass, setHidePass, ...rest },
+  ref,
+) => {
+  const inputElementRef = useRef<any>(null);
+
+  const [isFocused, setIsFocused] = useState(false);
+  const [isFilled, setIsFilled] = useState(false);
+
+  const handleOnFocus = useCallback(() => {
+    setIsFocused(true);
+  }, []);
+
+  const handleOnFilled = useCallback(() => {
+    setIsFocused(false);
+    setIsFilled(true);
+  }, []);
+
+  useImperativeHandle(ref, () => ({
+    focus() {
+      inputElementRef.current.focus();
+    },
+  }));
+
   return (
-    <Container isFocused isErrored={false}>
-      {ìcon && <Icon name={icon} size={26} />}
-      <InputText {...rest} />
-    </Container>
-    /*  <Container isFocused={isFocused} isErrored={!!error}>
-      <Icon
-        name={icon}
-        type={iconType}
-        size={20}
-        color={
-          isFocused || isFilled
-            ? constants.COLOR_PRIMARY
-            : constants.COLOR_OFF_GRAY
-        }
-      />
-      <InputText
-        ref={inputElementRef}
-        defaultValue={defaultValue}
-        onFocus={handleOnFocus}
-        onBlur={handleOnFilled}
-        onChangeText={value => {
-          inputValueRef.current.value = value;
-        }}
-        keyboardAppearance="dark"
-        placeholderTextColor={constants.COLOR_OFF_GRAY}
-        {...rest}
-      />
-    </Container> */
+    <>
+      <Container isFocused={isFocused} isErrored={!!error}>
+        <Controller
+          name={name}
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <>
+              {icon && <Icon name={icon} size={26} />}
+              <InputText
+                ref={inputElementRef}
+                onChangeText={onChange}
+                onFocus={handleOnFocus}
+                onBlur={handleOnFilled}
+                value={value}
+                {...rest}
+              />
+              {name === 'password' && (
+                <Icon
+                  name={hidePass ? 'eye' : 'eye-with-line'}
+                  onPress={() => setHidePass(!hidePass)}
+                />
+              )}
+            </>
+          )}
+        />
+      </Container>
+
+      {error && <Error>{error}</Error>}
+    </>
   );
 };
 
-export default Input;
+export default forwardRef(Input);

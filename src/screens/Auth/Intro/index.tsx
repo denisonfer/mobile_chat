@@ -8,6 +8,7 @@ import Button from '#/components/Button';
 import {
   Container,
   Logo,
+  LogoFinal,
   LottieAnimation,
   Span,
   Title,
@@ -20,7 +21,9 @@ const IntroScreen: React.FC = function () {
   return (
     <Container>
       <Title>Bem-vindo ao</Title>
-      <Logo>TireiTU</Logo>
+      <Logo>
+        Tirei<LogoFinal>TU</LogoFinal>
+      </Logo>
 
       <Span>Seu novo app para gerenciar seus amigos secretos</Span>
 
