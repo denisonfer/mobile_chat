@@ -7,8 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 import Input from '#/components/Input';
-import { IResponseSignIn, login } from '#/services/requests/auth/login';
-import useAuthStore from '#/store/auth/authStore';
+import { useAuthStore } from '#/store/auth/useAuthStore';
 
 import {
   ButtonForgotPassword,
@@ -45,18 +44,11 @@ const SignInScreen: React.FC = () => {
 
   const [hidePass, setHidePass] = useState(true);
 
-  const { requestSignIn, requestFailure, signInSuccess } = useAuthStore();
-  const handleSignIn = useCallback(async form => {
-    requestSignIn();
-    const { email, password } = form;
-    const response = await login({ email, password });
-    console.tron.log('[handleSignIn] - response: ', response);
+  const { signInRequest, loading } = useAuthStore();
 
-    if (!response) {
-      return requestFailure();
-    }
-    const { user, token } = response;
-    signInSuccess(token);
+  const handleSignIn = useCallback(async form => {
+    const { email, password } = form;
+    await signInRequest(email, password);
   }, []);
 
   const handleErrors = useCallback(() => {
@@ -104,7 +96,9 @@ const SignInScreen: React.FC = () => {
             />
 
             <ButtonSignIn onPress={handleSubmit(handleSignIn, handleErrors)}>
-              <TextButtonSignIn>ACESSAR MINHA CONTA</TextButtonSignIn>
+              <TextButtonSignIn>
+                {loading ? 'BUSCANDO NO SERVIDOR...' : 'ACESSAR MINHA CONTA'}
+              </TextButtonSignIn>
             </ButtonSignIn>
 
             <ButtonSignUp>

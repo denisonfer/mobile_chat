@@ -4,22 +4,27 @@ import produce from 'immer';
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
 
-export type InitialState = {
+import { authActionsSlice } from './requestSignIn';
+
+export type IAuthInitialStates = {
   loading: boolean;
   token: string | null;
   isSigned: boolean;
+  signInRequest: (email: string, password: string) => void;
+  signInSuccess: (token: string) => void;
+  requestFailure: () => void;
 };
 
-const initialState: InitialState = {
-  loading: false,
-  token: null,
-  isSigned: false,
-};
-
-export const useAuthStore = create(
+export const useAuthStore = create<IAuthInitialStates>(
   persist(
-    set => ({
-      ...initialState,
+    (set, get) => ({
+      //* INITIAL STATES
+      loading: false,
+      token: null,
+      isSigned: false,
+
+      //* ACTIONS
+      ...authActionsSlice(set, get),
     }),
     { name: '@authState', getStorage: () => AsyncStorage },
   ),
