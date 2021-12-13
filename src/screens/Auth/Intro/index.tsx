@@ -40,6 +40,7 @@ const IntroScreen: React.FC = function () {
       <Button
         isOutline
         title="Criar minha conta"
+        onPress={() => navigate('SignUpScreen')}
         animation="fadeInDown"
         delay={2500}
         duration={1000}

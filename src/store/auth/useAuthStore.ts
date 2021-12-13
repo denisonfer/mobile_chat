@@ -12,7 +12,7 @@ export type AuthStates = {
   token: string | null;
   isSigned: boolean;
   signInRequest: (email: string, password: string) => Promise<IUser>;
-  requestFailure: () => void;
+  signOut: () => void;
 };
 
 export const useAuthStore = create<AuthStates>(

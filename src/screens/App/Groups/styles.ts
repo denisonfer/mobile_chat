@@ -6,6 +6,7 @@ export const Container = styled.View`
   flex: 1;
   padding: 20px;
   background: ${({ theme }) => theme.colors.BACKGROUND};
+  justify-content: center;
 `;
 export const Title = styled.Text`
   font-size: ${RFValue(24)}px;

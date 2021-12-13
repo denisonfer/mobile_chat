@@ -45,7 +45,7 @@ export const authActionsSlice = (
       }
     }
   },
-  requestFailure: () => {
-    set(() => ({ loading: false }));
+  signOut: () => {
+    set(() => ({ token: null, isSigned: false }));
   },
 });

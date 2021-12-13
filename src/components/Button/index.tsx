@@ -6,7 +6,7 @@ import { Container, Gradient, TextButton } from './styles';
 
 interface IButtonProps extends RectButtonProps {
   title: string;
-  isOutline: boolean;
+  isOutline?: boolean;
 }
 
 const Button: React.FC<IButtonProps> = ({ title, isOutline, ...rest }) => {

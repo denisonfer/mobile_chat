@@ -12,7 +12,8 @@ import { useAuthStore } from '#/store/auth/useAuthStore';
 import { useUserStore } from '#/store/user/useUserStore';
 
 import {
-  ButtonForgotPassword,
+  Avatar,
+  ButtonAddAvatar,
   ButtonSignIn,
   ButtonSignUp,
   Container,
@@ -21,20 +22,21 @@ import {
   Logo,
   LogoFinal,
   Row,
+  Icon,
   Scroll,
   Span,
-  TextButtonForgot,
   TextButtonSignIn,
   TextButtonSignUp,
   Title,
 } from './styles';
 
-const schemaSignIn = yup.object().shape({
+const schemaSignUp = yup.object().shape({
+  name: yup.string().min(3).required('Obrigatório'),
   email: yup.string().email('Informe um e-mail válido').required('Obrigatório'),
   password: yup.string().min(6, 'Min. 6 caracteres').required('Obrigatório'),
 });
 
-const SignInScreen: React.FC = () => {
+const SignUpScreen: React.FC = () => {
   const { navigate } = useNavigation();
   const passwordRef = useRef(null);
   const {
@@ -42,22 +44,27 @@ const SignInScreen: React.FC = () => {
     formState: { errors },
     handleSubmit,
   } = useForm({
-    resolver: yupResolver(schemaSignIn),
+    resolver: yupResolver(schemaSignUp),
   });
 
   const [hidePass, setHidePass] = useState(true);
+  const [avatar, setAvatar] = useState('');
 
   const { signInRequest, loading } = useAuthStore();
   const { saveUser } = useUserStore();
 
-  const handleSignIn = useCallback(async form => {
-    const { email, password } = form;
+  const handleSignUp = useCallback(async form => {
+    const { name, email, password } = form;
     const user = await signInRequest(email, password);
     saveUser(user);
   }, []);
 
   const handleErrors = useCallback(() => {
     Vibration.vibrate(0.5 * 1000);
+  }, []);
+
+  const handlePickAvatar = useCallback(() => {
+    console.tron.log('HANDLE PICK AVATAR');
   }, []);
 
   return (
@@ -71,11 +78,26 @@ const SignInScreen: React.FC = () => {
 
           <GradientView>
             <Row>
-              <Title>Login</Title>
-              <ButtonForgotPassword>
-                <TextButtonForgot>Esqueci minha senha</TextButtonForgot>
-              </ButtonForgotPassword>
+              <Title>Cadastro</Title>
+
+              <ButtonAddAvatar onPress={handlePickAvatar}>
+                {avatar ? (
+                  <Avatar source={{ uri: avatar }} />
+                ) : (
+                  <Icon name="camera-plus" />
+                )}
+              </ButtonAddAvatar>
             </Row>
+
+            <Input
+              name="name"
+              placeholder="Digite seu nome"
+              control={control}
+              icon="user"
+              autoCapitalize="words"
+              returnKeyType="next"
+              error={errors.name && errors.name.message}
+            />
 
             <Input
               name="email"
@@ -88,6 +110,7 @@ const SignInScreen: React.FC = () => {
               returnKeyType="next"
               error={errors.email && errors.email.message}
             />
+
             <Input
               ref={passwordRef}
               name="password"
@@ -100,15 +123,15 @@ const SignInScreen: React.FC = () => {
               error={errors.password && errors.password.message}
             />
 
-            <ButtonSignIn onPress={handleSubmit(handleSignIn, handleErrors)}>
-              <TextButtonSignIn>
-                {loading ? 'BUSCANDO NO SERVIDOR...' : 'ACESSAR MINHA CONTA'}
-              </TextButtonSignIn>
-            </ButtonSignIn>
-
-            <ButtonSignUp onPress={() => navigate('SignUpScreen')}>
-              <TextButtonSignUp>CADASTRAR</TextButtonSignUp>
+            <ButtonSignUp onPress={handleSubmit(handleSignUp, handleErrors)}>
+              <TextButtonSignUp>
+                {loading ? 'BUSCANDO NO SERVIDOR...' : 'CRIAR MINHA CONTA'}
+              </TextButtonSignUp>
             </ButtonSignUp>
+
+            <ButtonSignIn onPress={() => navigate('SignInScreen')}>
+              <TextButtonSignIn>LOGIN</TextButtonSignIn>
+            </ButtonSignIn>
           </GradientView>
         </Container>
       </Scroll>
@@ -116,4 +139,4 @@ const SignInScreen: React.FC = () => {
   );
 };
 
-export default SignInScreen;
+export default SignUpScreen;
