@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Vibration } from 'react-native';
+import { ActivityIndicator, Vibration } from 'react-native';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigation } from '@react-navigation/native';
@@ -101,9 +101,11 @@ const SignInScreen: React.FC = () => {
             />
 
             <ButtonSignIn onPress={handleSubmit(handleSignIn, handleErrors)}>
-              <TextButtonSignIn>
-                {loading ? 'BUSCANDO NO SERVIDOR...' : 'ACESSAR MINHA CONTA'}
-              </TextButtonSignIn>
+              {loading ? (
+                <ActivityIndicator size="large" />
+              ) : (
+                <TextButtonSignIn>ACESSAR MINHA CONTA</TextButtonSignIn>
+              )}
             </ButtonSignIn>
 
             <ButtonSignUp onPress={() => navigate('SignUpScreen')}>

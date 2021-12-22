@@ -1,3 +1,4 @@
 export default {
-  sessions: 'sessions',
+  sessions: 'sessions', //* LOGIN
+  signup: 'users', //* CRIAR UM USUÁRIO
 };

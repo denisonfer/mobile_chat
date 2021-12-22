@@ -1,6 +1,8 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Vibration } from 'react-native';
+import { ActivityIndicator, Vibration } from 'react-native';
+import { getUniqueId } from 'react-native-device-info';
+import ImagePicker from 'react-native-image-crop-picker';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigation } from '@react-navigation/native';
@@ -9,7 +11,6 @@ import * as yup from 'yup';
 
 import Input from '#/components/Input';
 import { useAuthStore } from '#/store/auth/useAuthStore';
-import { useUserStore } from '#/store/user/useUserStore';
 
 import {
   Avatar,
@@ -43,6 +44,7 @@ const SignUpScreen: React.FC = () => {
     control,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm({
     resolver: yupResolver(schemaSignUp),
   });
@@ -50,13 +52,14 @@ const SignUpScreen: React.FC = () => {
   const [hidePass, setHidePass] = useState(true);
   const [avatar, setAvatar] = useState('');
 
-  const { signInRequest, loading } = useAuthStore();
-  const { saveUser } = useUserStore();
+  const { signUpRequest, loading } = useAuthStore();
 
   const handleSignUp = useCallback(async form => {
     const { name, email, password } = form;
-    const user = await signInRequest(email, password);
-    saveUser(user);
+    const device_id = getUniqueId();
+
+    await signUpRequest({ name, email, password, device_id });
+    reset();
   }, []);
 
   const handleErrors = useCallback(() => {
@@ -65,6 +68,16 @@ const SignUpScreen: React.FC = () => {
 
   const handlePickAvatar = useCallback(() => {
     console.tron.log('HANDLE PICK AVATAR');
+    ImagePicker.openPicker({
+      mediaType: 'photo',
+      width: 300,
+      height: 400,
+      cropping: true,
+      cropperCircleOverlay: true,
+    }).then(response => {
+      console.tron.log('response: ', response);
+      setAvatar(response.path);
+    });
   }, []);
 
   return (
@@ -124,9 +137,11 @@ const SignUpScreen: React.FC = () => {
             />
 
             <ButtonSignUp onPress={handleSubmit(handleSignUp, handleErrors)}>
-              <TextButtonSignUp>
-                {loading ? 'BUSCANDO NO SERVIDOR...' : 'CRIAR MINHA CONTA'}
-              </TextButtonSignUp>
+              {loading ? (
+                <ActivityIndicator size="large" />
+              ) : (
+                <TextButtonSignUp>CRIAR MINHA CONTA</TextButtonSignUp>
+              )}
             </ButtonSignUp>
 
             <ButtonSignIn onPress={() => navigate('SignInScreen')}>

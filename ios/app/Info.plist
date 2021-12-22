@@ -73,5 +73,11 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+  <key>NSMicrophoneUsageDescription</key>
+	<string/>
+  <key>NSCameraUsageDescription</key>
+	<string/>
+  <key>NSPhotoLibraryUsageDescription</key>
+	<string>$(PRODUCT_NAME) gostaria de acessar sua galeria de fotos</string>
 </dict>
 </plist>

@@ -7,11 +7,24 @@ import { IUser } from '#/shared/interfaces/IUser';
 
 import { authActionsSlice } from './requestSignIn';
 
+export interface ISignUpRequest {
+  name: string;
+  email: string;
+  password: string;
+  device_id: string;
+}
+
 export type AuthStates = {
   loading: boolean;
   token: string | null;
   isSigned: boolean;
   signInRequest: (email: string, password: string) => Promise<IUser>;
+  signUpRequest: ({
+    name,
+    email,
+    password,
+    device_id,
+  }: ISignUpRequest) => Promise<void>;
   signOut: () => void;
 };
 

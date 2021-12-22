@@ -6,12 +6,13 @@ import { useAuthStore } from '#/store/auth/useAuthStore';
 
 import AppRoutes from './app.routes';
 import AuthRoutes from './auth.routes';
+import { navigationRef } from './rootNavigation';
 
-const Routes: React.FC = function () {
+const Routes = () => {
   const { token, isSigned } = useAuthStore();
 
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       {token && isSigned ? <AppRoutes /> : <AuthRoutes />}
     </NavigationContainer>
   );
