@@ -37,7 +37,7 @@ export const authActionsSlice = (
         console.tron.log('[SIGN IN REQUEST error]:: ', error);
         set(() => ({ loading: false }));
         showMessage({
-          message: `${error.message}`,
+          message: `${error.response?.data.message}`,
           type: 'danger',
           icon: 'danger',
           floating: true,
@@ -52,10 +52,11 @@ export const authActionsSlice = (
     password,
     device_id,
     avatarData,
-  }: ISignUpRequest): Promise<void> => {
+  }: ISignUpRequest): Promise<any> => {
     set(() => ({ loading: true }));
 
     try {
+      let user;
       const { data } = await api.post(endpoints.signup, {
         name,
         email,
@@ -71,7 +72,12 @@ export const authActionsSlice = (
           uri: avatarData.path,
         });
 
-        await api.patch(`${endpoints.avatar}/${data.id}`, formData);
+        const response = await api.patch(
+          `${endpoints.avatar}/${data.id}`,
+          formData,
+        );
+
+        user = response.data;
       }
 
       set(() => ({ loading: false }));
@@ -85,6 +91,7 @@ export const authActionsSlice = (
       });
 
       navigate('SignInScreen');
+      return user;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.tron.log('[SIGN UP REQUEST error]:: ', error);

@@ -1,7 +1,15 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { ActivityIndicator, Vibration } from 'react-native';
+import {
+  ActivityIndicator,
+  Alert,
+  Linking,
+  PermissionsAndroid,
+  Platform,
+  Vibration,
+} from 'react-native';
 import { getUniqueId } from 'react-native-device-info';
+import { showMessage } from 'react-native-flash-message';
 import ImagePicker, { Image } from 'react-native-image-crop-picker';
 import { launchImageLibrary } from 'react-native-image-picker';
 
@@ -12,6 +20,7 @@ import * as yup from 'yup';
 
 import Input from '#/components/Input';
 import { useAuthStore } from '#/store/auth/useAuthStore';
+import { useUserStore } from '#/store/user/useUserStore';
 
 import {
   Avatar,
@@ -55,14 +64,33 @@ const SignUpScreen: React.FC = () => {
   const [avatarData, setAvatarData] = useState<Image>({} as Image);
 
   const { signUpRequest, loading } = useAuthStore();
+  const { saveUser } = useUserStore();
 
   const handleSignUp = useCallback(
     async form => {
+      if (!avatar) {
+        return showMessage({
+          message: 'Considere usar uma foto 🥰',
+          type: 'info',
+          icon: 'info',
+          floating: true,
+          duration: 2000,
+        });
+      }
+
       const { name, email, password } = form;
       const device_id = getUniqueId();
 
-      await signUpRequest({ name, email, password, device_id, avatarData });
+      const user = await signUpRequest({
+        name,
+        email,
+        password,
+        device_id,
+        avatarData,
+      });
+      saveUser(user);
       reset();
+      setAvatar('');
     },
     [avatarData],
   );
@@ -71,29 +99,43 @@ const SignUpScreen: React.FC = () => {
     Vibration.vibrate(0.5 * 1000);
   }, []);
 
-  const handlePickAvatar = useCallback(() => {
-    console.tron.log('HANDLE PICK AVATAR');
-    launchImageLibrary(
-      {
-        mediaType: 'photo',
-        quality: 1,
-      },
-      ({ assets }) => {
-        if (!assets || assets.length === 0) {
-          console.tron.log('NÃO HÁ IMAGEM PARA CARREGAR');
-          return;
-        }
-        const { uri } = assets[0];
+  const handlePickAvatar = useCallback(async () => {
+    if (Platform.OS === 'android') {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+      );
 
-        ImagePicker.openCropper({
-          path: uri,
-          cropperCircleOverlay: true,
-        }).then(response => {
-          setAvatar(response.path);
-          setAvatarData(response);
-        });
-      },
-    );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.tron.log('permissão concedida');
+      } else {
+        Alert.alert(
+          'Permissão necessária!',
+          'Para que o app funcione corretamente, revise sua permissão de uso da câmera.',
+          [
+            {
+              text: 'Cancelar',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
+            },
+            {
+              text: 'REVISAR PERMISSÃO',
+              onPress: async () => {
+                await Linking.openSettings();
+              },
+            },
+          ],
+        );
+
+        await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
+      }
+    }
+    ImagePicker.openPicker({
+      cropping: true,
+      cropperCircleOverlay: true,
+    }).then(response => {
+      setAvatar(response.path);
+      setAvatarData(response);
+    });
   }, []);
 
   return (

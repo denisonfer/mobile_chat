@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ActivityIndicator, Vibration } from 'react-native';
 
@@ -34,13 +34,14 @@ const schemaSignIn = yup.object().shape({
   password: yup.string().min(6, 'Min. 6 caracteres').required('Obrigatório'),
 });
 
-const SignInScreen: React.FC = () => {
+const SignInScreen = () => {
   const { navigate } = useNavigation();
   const passwordRef = useRef(null);
   const {
     control,
     formState: { errors },
     handleSubmit,
+    setValue,
   } = useForm({
     resolver: yupResolver(schemaSignIn),
   });
@@ -48,7 +49,7 @@ const SignInScreen: React.FC = () => {
   const [hidePass, setHidePass] = useState(true);
 
   const { signInRequest, loading } = useAuthStore();
-  const { saveUser } = useUserStore();
+  const { saveUser, user: userInStore } = useUserStore();
 
   const handleSignIn = useCallback(async form => {
     const { email, password } = form;
@@ -59,6 +60,12 @@ const SignInScreen: React.FC = () => {
   const handleErrors = useCallback(() => {
     Vibration.vibrate(0.5 * 1000);
   }, []);
+
+  useEffect(() => {
+    if (userInStore) {
+      setValue('email', userInStore.email, { shouldValidate: true });
+    }
+  }, [userInStore]);
 
   return (
     <KeyboardAvoid>

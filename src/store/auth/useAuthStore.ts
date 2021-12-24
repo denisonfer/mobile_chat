@@ -7,7 +7,7 @@ import { persist } from 'zustand/middleware';
 
 import { IUser } from '#/shared/interfaces/IUser';
 
-import { authActionsSlice } from './requestSignIn';
+import { authActionsSlice } from './authActionsSlice';
 
 export interface ISignUpRequest {
   name: string;
@@ -28,7 +28,7 @@ export type AuthStates = {
     password,
     device_id,
     avatarData,
-  }: ISignUpRequest) => Promise<void>;
+  }: ISignUpRequest) => Promise<IUser>;
   signOut: () => void;
 };
 
