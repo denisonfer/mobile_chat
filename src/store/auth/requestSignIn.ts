@@ -51,6 +51,7 @@ export const authActionsSlice = (
     email,
     password,
     device_id,
+    avatarData,
   }: ISignUpRequest): Promise<void> => {
     set(() => ({ loading: true }));
 
@@ -62,8 +63,26 @@ export const authActionsSlice = (
         device_id,
       });
 
-      console.tron.log('data', data);
+      if (data) {
+        const formData = new FormData();
+        formData.append('avatar', {
+          type: 'image/jpeg',
+          name: `${data.id}.jpg`,
+          uri: avatarData.path,
+        });
+
+        await api.patch(`${endpoints.avatar}/${data.id}`, formData);
+      }
+
       set(() => ({ loading: false }));
+
+      showMessage({
+        message: 'Conta criada com sucesso!',
+        type: 'success',
+        icon: 'success',
+        floating: true,
+        duration: 2000,
+      });
 
       navigate('SignInScreen');
     } catch (error) {

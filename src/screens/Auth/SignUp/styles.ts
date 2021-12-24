@@ -55,7 +55,7 @@ export const Logo = styled(TypeWriter).attrs({
   font-size: ${RFValue(48)}px;
   font-family: ${({ theme }) => theme.fonts.LOGO};
   color: ${({ theme }) => theme.colors.TITLE};
-  margin-top: ${RFPercentage(10)}px;
+  margin-top: ${RFPercentage(3)}px;
 `;
 
 export const LogoFinal = styled.Text`

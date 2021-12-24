@@ -1,4 +1,5 @@
 export default {
   sessions: 'sessions', //* LOGIN
   signup: 'users', //* CRIAR UM USUÁRIO
+  avatar: 'users/avatar', //* SALVAR AVATAR DO USUÁRIO
 };

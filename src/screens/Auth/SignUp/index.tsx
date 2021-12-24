@@ -2,7 +2,8 @@ import React, { useCallback, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ActivityIndicator, Vibration } from 'react-native';
 import { getUniqueId } from 'react-native-device-info';
-import ImagePicker from 'react-native-image-crop-picker';
+import ImagePicker, { Image } from 'react-native-image-crop-picker';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigation } from '@react-navigation/native';
@@ -51,16 +52,20 @@ const SignUpScreen: React.FC = () => {
 
   const [hidePass, setHidePass] = useState(true);
   const [avatar, setAvatar] = useState('');
+  const [avatarData, setAvatarData] = useState<Image>({} as Image);
 
   const { signUpRequest, loading } = useAuthStore();
 
-  const handleSignUp = useCallback(async form => {
-    const { name, email, password } = form;
-    const device_id = getUniqueId();
+  const handleSignUp = useCallback(
+    async form => {
+      const { name, email, password } = form;
+      const device_id = getUniqueId();
 
-    await signUpRequest({ name, email, password, device_id });
-    reset();
-  }, []);
+      await signUpRequest({ name, email, password, device_id, avatarData });
+      reset();
+    },
+    [avatarData],
+  );
 
   const handleErrors = useCallback(() => {
     Vibration.vibrate(0.5 * 1000);
@@ -68,16 +73,27 @@ const SignUpScreen: React.FC = () => {
 
   const handlePickAvatar = useCallback(() => {
     console.tron.log('HANDLE PICK AVATAR');
-    ImagePicker.openPicker({
-      mediaType: 'photo',
-      width: 300,
-      height: 400,
-      cropping: true,
-      cropperCircleOverlay: true,
-    }).then(response => {
-      console.tron.log('response: ', response);
-      setAvatar(response.path);
-    });
+    launchImageLibrary(
+      {
+        mediaType: 'photo',
+        quality: 1,
+      },
+      ({ assets }) => {
+        if (!assets || assets.length === 0) {
+          console.tron.log('NÃO HÁ IMAGEM PARA CARREGAR');
+          return;
+        }
+        const { uri } = assets[0];
+
+        ImagePicker.openCropper({
+          path: uri,
+          cropperCircleOverlay: true,
+        }).then(response => {
+          setAvatar(response.path);
+          setAvatarData(response);
+        });
+      },
+    );
   }, []);
 
   return (

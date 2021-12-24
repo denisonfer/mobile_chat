@@ -1,3 +1,5 @@
+import { Image } from 'react-native-image-crop-picker';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import create from 'zustand';
@@ -12,6 +14,7 @@ export interface ISignUpRequest {
   email: string;
   password: string;
   device_id: string;
+  avatarData: Image;
 }
 
 export type AuthStates = {
@@ -24,6 +27,7 @@ export type AuthStates = {
     email,
     password,
     device_id,
+    avatarData,
   }: ISignUpRequest) => Promise<void>;
   signOut: () => void;
 };
