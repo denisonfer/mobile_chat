@@ -12,6 +12,8 @@ import TypeWriter from 'react-native-typewriter';
 
 import styled from 'styled-components/native';
 
+import Button from '#/components/Button';
+
 const AnimatedGradient = Animatable.createAnimatableComponent(LinearGradient);
 
 const makeSlideInTransition = (type: string) => {
@@ -148,4 +150,53 @@ export const TextButtonSignUp = styled.Text`
   font-family: ${({ theme }) => theme.fonts.REGULAR};
   font-weight: 500;
   color: ${({ theme }) => theme.colors.TEXT_WHITE};
+`;
+
+export const ContainerModalForgotMyPass = styled.View`
+  justify-content: center;
+  padding: 34px;
+`;
+
+export const Label = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.REGULAR};
+  font-size: ${RFValue(14)}px;
+  color: #5a5d68;
+  margin-bottom: 8px;
+`;
+
+export const InputForgotPassword = styled.TextInput`
+  border: 1px solid #5a5d68;
+  width: 100%;
+  height: ${RFValue(50)}px;
+  padding: 0 16px;
+  border-radius: 7px;
+  margin-bottom: 8px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const ButtonSubmitForgotMyPass = styled.TouchableOpacity`
+  margin-top: 16px;
+  border: 1px solid ${({ theme }) => theme.colors.PRIMARY};
+  border-radius: 4px;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 0;
+`;
+
+export const TextButtonForgotMyPass = styled.Text`
+  font-size: ${RFValue(16)}px;
+  font-family: ${({ theme }) => theme.fonts.REGULAR};
+  font-weight: 500;
+  color: ${({ theme }) => theme.colors.PRIMARY};
+`;
+
+export const Error = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.REGULAR};
+  font-size: ${RFValue(14)}px;
+  font-weight: 500;
+  color: ${({ theme }) => theme.colors.RED};
+  margin-bottom: 10px;
+  margin-left: 10px;
 `;

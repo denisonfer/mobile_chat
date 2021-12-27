@@ -17,13 +17,14 @@ interface IInputProps extends TextInputProps {
   error: string;
   hidePass: boolean;
   setHidePass: (value: boolean) => void;
+  bgWhite?: boolean;
 }
 interface IInputRef {
   focus(): void;
 }
 
 const Input: React.ForwardRefRenderFunction<IInputRef, IInputProps> = (
-  { icon, control, name, error, hidePass, setHidePass, ...rest },
+  { icon, control, name, error, hidePass, setHidePass, bgWhite, ...rest },
   ref,
 ) => {
   const inputElementRef = useRef<any>(null);
@@ -48,7 +49,7 @@ const Input: React.ForwardRefRenderFunction<IInputRef, IInputProps> = (
 
   return (
     <>
-      <Container isFocused={isFocused} isErrored={!!error}>
+      <Container isFocused={isFocused} isErrored={!!error} bgWhite={bgWhite}>
         <Controller
           name={name}
           control={control}

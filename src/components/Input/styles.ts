@@ -8,6 +8,7 @@ interface IContainerProps {
   isFocused: boolean;
   isErrored: boolean;
   isFilled?: boolean;
+  bgWhite?: boolean;
 }
 
 export const Container = styled.View<IContainerProps>`
@@ -19,7 +20,8 @@ export const Container = styled.View<IContainerProps>`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  border: 1px solid ${({ theme }) => theme.colors.TEXT_WHITE};
+  border: 1px solid
+    ${({ theme, bgWhite }) => (bgWhite ? '#5a5d68' : theme.colors.TEXT_WHITE)};
 
   ${props =>
     props.isErrored &&
