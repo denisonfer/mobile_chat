@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { ActivityIndicator, Vibration, Pressable } from 'react-native';
+import { useForm, Controller } from 'react-hook-form';
+import { ActivityIndicator, Vibration } from 'react-native';
 import { showMessage } from 'react-native-flash-message';
 import { Modalize } from 'react-native-modalize';
 
@@ -61,8 +61,7 @@ const SignInScreen = () => {
     resolver: yupResolver(schemaSignIn),
   });
   const {
-    register,
-    // control: controlForgotMyPass,
+    control: controlForgotMyPass,
     handleSubmit: handleSubmitForgotMyPass,
     formState: { errors: errorsForgotMyPass },
   } = useForm({
@@ -109,6 +108,7 @@ const SignInScreen = () => {
           duration: 2000,
         });
       } */
+      setLoadingButtonForgotMyPass(false);
     } catch (error) {
       setLoadingButtonForgotMyPass(false);
       showMessage({
@@ -152,7 +152,7 @@ const SignInScreen = () => {
 
               <Input
                 name="email"
-                placeholder="Digite seu e-mail"
+                placeholder="seu.nome@mail.com"
                 control={control}
                 icon="mail"
                 autoCorrect={false}
@@ -192,12 +192,19 @@ const SignInScreen = () => {
       <Modalize ref={modalizeRef} adjustToContentHeight withHandle={false}>
         <ContainerModalForgotMyPass>
           <Label>E-mail para recuperação de senha</Label>
-          <InputForgotPassword
-            placeholder="seu.nome@code7.com"
-            autoCorrect={false}
-            autoCapitalize="none"
-            keyboardType="email-address"
-            {...register('email_forgot')}
+          <Controller
+            name="email_forgot"
+            control={controlForgotMyPass}
+            render={({ field: { onChange, value } }) => (
+              <InputForgotPassword
+                placeholder="seu.nome@mail.com"
+                autoCorrect={false}
+                autoCapitalize="none"
+                keyboardType="email-address"
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
           />
 
           {errorsForgotMyPass.email_forgot && (
