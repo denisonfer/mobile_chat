@@ -64,6 +64,7 @@ const SignInScreen = () => {
     control: controlForgotMyPass,
     handleSubmit: handleSubmitForgotMyPass,
     formState: { errors: errorsForgotMyPass },
+    reset,
   } = useForm({
     resolver: yupResolver(schemaForgotMyPass),
   });
@@ -109,6 +110,8 @@ const SignInScreen = () => {
         });
       } */
       setLoadingButtonForgotMyPass(false);
+      reset();
+      modalizeRef.current.close();
     } catch (error) {
       setLoadingButtonForgotMyPass(false);
       showMessage({
