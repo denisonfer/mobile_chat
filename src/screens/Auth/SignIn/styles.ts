@@ -174,6 +174,7 @@ export const InputForgotPassword = styled.TextInput`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  color: #5a5d68;
 `;
 
 export const ButtonSubmitForgotMyPass = styled.TouchableOpacity`
@@ -196,7 +197,7 @@ export const Error = styled.Text`
   font-family: ${({ theme }) => theme.fonts.REGULAR};
   font-size: ${RFValue(14)}px;
   font-weight: 500;
-  color: ${({ theme }) => theme.colors.RED};
+  color: red;
   margin-bottom: 10px;
   margin-left: 10px;
 `;

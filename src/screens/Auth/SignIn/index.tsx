@@ -10,6 +10,8 @@ import { useNavigation } from '@react-navigation/native';
 import * as yup from 'yup';
 
 import Input from '#/components/Input';
+import { api } from '#/services/api';
+import endpoints from '#/shared/endpoints';
 import { useAuthStore } from '#/store/auth/useAuthStore';
 import { useUserStore } from '#/store/user/useUserStore';
 
@@ -77,7 +79,7 @@ const SignInScreen = () => {
   const { saveUser, user: userInStore } = useUserStore();
 
   const openModalForgotMyPass = useCallback(() => {
-    modalizeRef.current.open();
+    modalizeRef.current!.open();
   }, []);
 
   const handleSignIn = useCallback(async form => {
@@ -87,20 +89,18 @@ const SignInScreen = () => {
   }, []);
 
   const handleForgotMyPass = useCallback(async form => {
-    console.tron.log('form: ', form);
     try {
       setLoadingButtonForgotMyPass(true);
 
       const { email_forgot } = form;
-      console.tron.log('email_forgot: ', email_forgot);
 
-      /* const { status } = await api.put('/login/forgot-password', {
+      const { status } = await api.post(endpoints.password, {
         email: email_forgot,
       });
 
       setLoadingButtonForgotMyPass(false);
 
-      if (status === 200) {
+      if (status === 204) {
         showMessage({
           message: 'E-mail enviado com sucesso!',
           type: 'success',
@@ -108,20 +108,19 @@ const SignInScreen = () => {
           floating: true,
           duration: 2000,
         });
-      } */
-      setLoadingButtonForgotMyPass(false);
+      }
       reset();
-      modalizeRef.current.close();
+      modalizeRef.current!.close();
     } catch (error) {
       setLoadingButtonForgotMyPass(false);
       showMessage({
-        message: `${error.response.data}`,
+        message: `${error.response.data.message}`,
         type: 'danger',
         icon: 'danger',
         floating: true,
         duration: 2000,
       });
-      console.error('✨✨✨ ------ error handleForgotMyPass =>', error);
+      console.log('✨✨✨ ------ error handleForgotMyPass =>', error);
     }
   }, []);
 
