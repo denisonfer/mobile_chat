@@ -2,7 +2,7 @@ import React from 'react';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import GroupsScreen from '#/screens/App/Groups';
+import DashboardScreen from '#/screens/App/Dashboard';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -13,7 +13,7 @@ const AppRoutes: React.FC = function () {
         headerShown: false,
       }}
     >
-      <Screen name="GroupsScreen" component={GroupsScreen} />
+      <Screen name="DashboardScreen" component={DashboardScreen} />
     </Navigator>
   );
 };
