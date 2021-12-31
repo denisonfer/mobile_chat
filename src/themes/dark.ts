@@ -16,6 +16,10 @@ export default {
 
     RED: '#FF3333',
     GREEN: '#00C851',
+
+    STATUS_FASE_1: '#25a1c9',
+    STATUS_FASE_2: '#14e4d8',
+    STATUS_FASE_3: '#28c925',
   },
   fonts: {
     LOGO: 'Lemon-Regular',

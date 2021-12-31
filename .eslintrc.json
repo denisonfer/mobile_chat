@@ -38,6 +38,7 @@
     "no-param-reassign": "off",
     "no-unused-expressions": "off",
     "no-use-before-define": "off",
+    "no-nested-ternary": "off",
     "consistent-return": "off",
     "prettier/prettier": "error",
     "react-hooks/rules-of-hooks": "error",

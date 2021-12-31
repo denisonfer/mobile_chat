@@ -19,6 +19,10 @@ declare module 'styled-components' {
 
       RED: string;
       GREEN: string;
+
+      STATUS_FASE_1: string;
+      STATUS_FASE_2: string;
+      STATUS_FASE_3: string;
     };
     fonts: {
       LOGO: string;
