@@ -1,5 +1,5 @@
 import { ScrollView } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import AnimatedLinearGradient from 'react-native-animated-linear-gradient';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 
 import styled from 'styled-components/native';
@@ -18,8 +18,8 @@ export const Header = styled.View`
   height: ${RFPercentage(20)}px;
 `;
 
-export const Gradient = styled(LinearGradient).attrs(({ theme }) => ({
-  colors: [
+export const Gradient = styled(AnimatedLinearGradient).attrs(({ theme }) => ({
+  customColors: [
     theme.colors.GRADIENT_COLOR_1,
     theme.colors.GRADIENT_COLOR_2,
     theme.colors.GRADIENT_COLOR_3,
@@ -27,19 +27,17 @@ export const Gradient = styled(LinearGradient).attrs(({ theme }) => ({
   start: { x: 0, y: 0 },
   end: { x: 0, y: 1 },
 }))`
-  flex-direction: row;
-  align-items: flex-end;
-  height: 100%;
-  width: 100%;
-  padding: 0 20px;
-  border-bottom-right-radius: 60px;
+  position: relative;
 `;
 
 export const NameUser = styled.Text`
   color: ${({ theme }) => theme.colors.TEXT_WHITE};
   font-size: ${RFValue(20)}px;
   font-family: ${({ theme }) => theme.fonts.BOLD};
-  margin-left: 16px;
+  margin-left: ${RFValue(70)}px;
+  position: absolute;
+  bottom: 0;
+  left: 20px;
 `;
 
 export const Scroll = styled(ScrollView).attrs({
@@ -54,13 +52,15 @@ export const ButtonBoxAvatar = styled.TouchableOpacity`
   width: ${RFValue(60)}px;
   height: ${RFValue(60)}px;
   padding: 4px;
-  margin-bottom: -25px;
+  margin-top: ${RFValue(-30)}px;
+  margin-left: 20px;
 `;
 
 export const Avatar = styled.Image`
   width: 100%;
   height: 100%;
   border-radius: 200px;
+  z-index: 10;
 `;
 
 export const Content = styled.View`

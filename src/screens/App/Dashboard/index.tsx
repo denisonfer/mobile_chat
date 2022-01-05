@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'react-native';
 
-import Button from '#/components/Button';
-import { useAuthStore } from '#/store/auth/useAuthStore';
 import { useUserStore } from '#/store/user/useUserStore';
 
 import {
@@ -22,8 +20,7 @@ import {
   Scroll,
 } from './styles';
 
-const DashboardScreen = () => {
-  const { signOut } = useAuthStore();
+export const DashboardScreen = () => {
   const { user } = useUserStore();
 
   const [groups, setGroups] = useState([
@@ -54,6 +51,42 @@ const DashboardScreen = () => {
         title: 'Evento realizado',
       },
     },
+    {
+      id: '4',
+      name: 'Grupo da igreja',
+      members_quantity: 44,
+      status: {
+        id: '3',
+        title: 'Evento realizado',
+      },
+    },
+    {
+      id: '5',
+      name: 'Grupo do Muay Thai',
+      members_quantity: 44,
+      status: {
+        id: '2',
+        title: 'Sorteio realizado',
+      },
+    },
+    {
+      id: '6',
+      name: 'Grupo do Muay Thai',
+      members_quantity: 44,
+      status: {
+        id: '2',
+        title: 'Sorteio realizado',
+      },
+    },
+    {
+      id: '7',
+      name: 'Grupo do Muay Thai',
+      members_quantity: 44,
+      status: {
+        id: '2',
+        title: 'Sorteio realizado',
+      },
+    },
   ]);
 
   return (
@@ -61,13 +94,13 @@ const DashboardScreen = () => {
       <StatusBar backgroundColor="#5200FF" />
       <Header>
         <Gradient>
-          <ButtonBoxAvatar onPress={() => alert('Levar para tela de perfil')}>
-            <Avatar source={{ uri: user?.avatar }} />
-          </ButtonBoxAvatar>
-
           <NameUser>{user?.name}</NameUser>
         </Gradient>
       </Header>
+
+      <ButtonBoxAvatar onPress={() => alert('Levar para tela de perfil')}>
+        <Avatar source={{ uri: user?.avatar }} />
+      </ButtonBoxAvatar>
 
       <Scroll>
         <Content>
@@ -84,11 +117,8 @@ const DashboardScreen = () => {
               </Row>
             </GroupContainer>
           ))}
-          <Button title="Sair" onPress={signOut} />
         </Content>
       </Scroll>
     </Container>
   );
 };
-
-export default DashboardScreen;
