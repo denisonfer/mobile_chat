@@ -1,4 +1,4 @@
-import { ScrollView } from 'react-native';
+import { Platform, ScrollView } from 'react-native';
 import AnimatedLinearGradient from 'react-native-animated-linear-gradient';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 
@@ -46,6 +46,12 @@ export const Scroll = styled(ScrollView).attrs({
   showsVerticalScrollIndicator: false,
 })``;
 
+export const Content = styled.View`
+  flex: 1;
+  padding: 20px 20px ${Platform.OS === 'ios' ? 140 : 0}px 20px;
+  margin-top: 36px;
+`;
+
 export const ButtonBoxAvatar = styled.TouchableOpacity`
   background: ${({ theme }) => theme.colors.BACKGROUND};
   border-radius: 200px;
@@ -63,13 +69,7 @@ export const Avatar = styled.Image`
   z-index: 10;
 `;
 
-export const Content = styled.View`
-  flex: 1;
-  padding: 20px;
-  margin-top: 36px;
-`;
-
-export const GroupContainer = styled.View<IShapeStatus>`
+export const ButtonGroupContainer = styled.TouchableOpacity<IShapeStatus>`
   background: #f2f2f2;
   border-radius: 10px;
   border-top-right-radius: 10px;

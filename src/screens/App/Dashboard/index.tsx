@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'react-native';
 
+import { useNavigation } from '@react-navigation/native';
+
 import { useUserStore } from '#/store/user/useUserStore';
 
 import {
@@ -11,7 +13,7 @@ import {
   Gradient,
   Header,
   NameUser,
-  GroupContainer,
+  ButtonGroupContainer,
   GroupName,
   Row,
   ShapeStatus,
@@ -21,6 +23,7 @@ import {
 } from './styles';
 
 export const DashboardScreen = () => {
+  const { navigate } = useNavigation();
   const { user } = useUserStore();
 
   const [groups, setGroups] = useState([
@@ -98,14 +101,18 @@ export const DashboardScreen = () => {
         </Gradient>
       </Header>
 
-      <ButtonBoxAvatar onPress={() => alert('Levar para tela de perfil')}>
+      <ButtonBoxAvatar onPress={() => navigate('ProfileScreen')}>
         <Avatar source={{ uri: user?.avatar }} />
       </ButtonBoxAvatar>
 
       <Scroll>
         <Content>
           {groups.map(group => (
-            <GroupContainer key={group.id} status={group.status.id}>
+            <ButtonGroupContainer
+              key={group.id}
+              status={group.status.id}
+              onPress={() => navigate('GroupStackScreen', { group })}
+            >
               <GroupName>{group.name}</GroupName>
 
               <Row>
@@ -115,7 +122,7 @@ export const DashboardScreen = () => {
 
                 <Info>{group.members_quantity} participantes</Info>
               </Row>
-            </GroupContainer>
+            </ButtonGroupContainer>
           ))}
         </Content>
       </Scroll>
