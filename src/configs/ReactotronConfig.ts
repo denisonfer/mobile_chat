@@ -11,7 +11,6 @@ let scriptHostname;
 if (__DEV__) {
   const { scriptURL } = NativeModules.SourceCode;
   scriptHostname = scriptURL.split('://')[1].split(':')[0];
-  console.log('scriptHostname', scriptHostname);
 
   const tron = Reactotron.configure({ host: scriptHostname })
     .useReactNative()

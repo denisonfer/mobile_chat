@@ -34,10 +34,10 @@ export const NameUser = styled.Text`
   color: ${({ theme }) => theme.colors.TEXT_WHITE};
   font-size: ${RFValue(20)}px;
   font-family: ${({ theme }) => theme.fonts.BOLD};
-  margin-left: ${RFValue(70)}px;
+  margin-left: 20px;
   position: absolute;
   bottom: 0;
-  left: 20px;
+  left: 0;
 `;
 
 export const Scroll = styled(ScrollView).attrs({
@@ -52,21 +52,16 @@ export const Content = styled.View`
   margin-top: 36px;
 `;
 
-export const ButtonBoxAvatar = styled.TouchableOpacity`
+export const ButtonCreateGroup = styled.TouchableOpacity`
+  align-items: center;
+  justify-content: center;
   background: ${({ theme }) => theme.colors.BACKGROUND};
   border-radius: 200px;
   width: ${RFValue(60)}px;
   height: ${RFValue(60)}px;
-  padding: 4px;
   margin-top: ${RFValue(-30)}px;
-  margin-left: 20px;
-`;
-
-export const Avatar = styled.Image`
-  width: 100%;
-  height: 100%;
-  border-radius: 200px;
-  z-index: 10;
+  margin-right: 20px;
+  align-self: flex-end;
 `;
 
 export const ButtonGroupContainer = styled.TouchableOpacity<IShapeStatus>`

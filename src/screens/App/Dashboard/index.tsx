@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { useNavigation } from '@react-navigation/native';
 
 import { useUserStore } from '#/store/user/useUserStore';
 
 import {
-  Avatar,
   Container,
-  ButtonBoxAvatar,
+  ButtonCreateGroup,
   Content,
   Gradient,
   Header,
@@ -97,13 +97,13 @@ export const DashboardScreen = () => {
       <StatusBar backgroundColor="#5200FF" />
       <Header>
         <Gradient>
-          <NameUser>{user?.name}</NameUser>
+          <NameUser>Olá, {user?.name}</NameUser>
         </Gradient>
       </Header>
 
-      <ButtonBoxAvatar onPress={() => navigate('ProfileScreen')}>
-        <Avatar source={{ uri: user?.avatar }} />
-      </ButtonBoxAvatar>
+      <ButtonCreateGroup onPress={() => navigate('CreateGroupScreen')}>
+        <Icon name="plus-circle" size={60} color="white" />
+      </ButtonCreateGroup>
 
       <Scroll>
         <Content>

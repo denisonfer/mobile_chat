@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
-import { Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -65,10 +64,10 @@ const BottomTabsScreens = () => {
       />
 
       <Screen
-        name="CreateGroupScreen"
-        component={CreateGroupScreen}
+        name="ProfileScreen"
+        component={ProfileScreen}
         options={{
-          tabBarIcon: tabBarIcon('plus-square'),
+          tabBarIcon: tabBarIcon('user'),
         }}
       />
 
@@ -104,7 +103,7 @@ const AppRoutes = function () {
     >
       <ScreenNavigator name="BottomTabsScreens" component={BottomTabsScreens} />
       <ScreenNavigator name="GroupStackScreen" component={GroupStackScreens} />
-      <ScreenNavigator name="ProfileScreen" component={ProfileScreen} />
+      <ScreenNavigator name="CreateGroupScreen" component={CreateGroupScreen} />
     </StackNavigator>
   );
 };
