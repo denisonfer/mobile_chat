@@ -5,10 +5,7 @@ import {
   Theme,
 } from 'react-native-easy-calendar';
 
-import { format, addDays } from 'date-fns';
 import PtBrLocale from 'dayjs/locale/pt-br';
-// import DateTimePicker from '@react-native-community/datetimepicker';
-
 import { useTheme } from 'styled-components';
 
 import { useFormNewGroupStore } from '#/store/formNewGroup/useFormNewGroupStore';
@@ -19,6 +16,7 @@ import {
   Container,
   RowButtons,
   Title,
+  Scroll,
 } from './styles';
 
 interface IProps {
@@ -85,29 +83,31 @@ export const DateParty = ({
   };
 
   return (
-    <Container>
-      <Title>Data da festa</Title>
+    <Scroll>
+      <Container>
+        <Title>Data da festa</Title>
 
-      <CalendarContainer>
-        <DateSelectionCalendar
-          locale={PtBrLocale}
-          minDate={state_date_string}
-          selectedDate={date}
-          onSelectDate={data => setDate(data)}
-          theme={CustomTheme}
-        />
-      </CalendarContainer>
+        <CalendarContainer>
+          <DateSelectionCalendar
+            locale={PtBrLocale}
+            minDate={state_date_string}
+            selectedDate={date}
+            onSelectDate={data => setDate(data)}
+            theme={CustomTheme}
+          />
+        </CalendarContainer>
 
-      <RowButtons>
-        <ButtonNavigate
-          title="Voltar"
-          onPress={() => {
-            previousStep();
-            setCurrentPage(1);
-          }}
-        />
-        <ButtonNavigate title="Próximo" onPress={handleValidFields} />
-      </RowButtons>
-    </Container>
+        <RowButtons>
+          <ButtonNavigate
+            title="Voltar"
+            onPress={() => {
+              previousStep();
+              setCurrentPage(1);
+            }}
+          />
+          <ButtonNavigate title="Próximo" onPress={handleValidFields} />
+        </RowButtons>
+      </Container>
+    </Scroll>
   );
 };

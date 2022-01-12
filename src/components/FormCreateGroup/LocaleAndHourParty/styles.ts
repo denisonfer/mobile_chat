@@ -1,8 +1,15 @@
+import { ScrollView } from 'react-native';
 import { RFValue, RFPercentage } from 'react-native-responsive-fontsize';
 
 import styled from 'styled-components/native';
 
 import Button from '#/components/Button';
+
+export const Scroll = styled(ScrollView).attrs({
+  contentContainerStyle: { flexGrow: 1 },
+  keyboardShouldPersistTaps: 'handled',
+  showsVerticalScrollIndicator: false,
+})``;
 
 export const Container = styled.View`
   padding: 20px;

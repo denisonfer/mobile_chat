@@ -11,17 +11,13 @@ import { LocaleAndHourParty } from '#/components/FormCreateGroup/LocaleAndHourPa
 import { NameAndValue } from '#/components/FormCreateGroup/NameAndValue';
 import { ReviewAndCreate } from '#/components/FormCreateGroup/ReviewAndCreate';
 import Header from '#/components/Header';
-import useThemeStore from '#/store/theme/useTheme';
 
 import { Container, ContainerSteps, Content } from './styles';
 
 export const CreateGroupScreen = () => {
-  const { isDarkTheme } = useThemeStore();
-  const { fonts, colors } = useTheme();
+  const { colors } = useTheme();
   const wizardRef = useRef(null);
 
-  const [isFirstStep, setIsFirstStep] = useState(true);
-  const [isLastStep, setIsLastStep] = useState(false);
   const [currentSteps, setCurrentSteps] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const stepList = [
@@ -63,7 +59,6 @@ export const CreateGroupScreen = () => {
     {
       content: (
         <ReviewAndCreate
-          nextStep={() => wizardRef.current!.next()}
           previousStep={() => wizardRef.current!.prev()}
           setCurrentPage={setCurrentPage}
         />
@@ -153,15 +148,16 @@ export const CreateGroupScreen = () => {
         <Wizard
           ref={wizardRef}
           steps={stepList}
-          // isFirstStep={val => setIsFirstStep(val)}
-          // isLastStep={val => setIsLastStep(val)}
+          duration={1000}
+          nextStepAnimation="slideDown"
+          prevStepAnimation="slideUp"
           onNext={() => {
             console.log('Next Step Called');
           }}
           onPrev={() => {
             console.log('Previous Step Called');
           }}
-          currentStep={({ currentStep, isLastStep, isFirstStep }) => {
+          currentStep={({ currentStep }) => {
             setCurrentSteps(currentStep);
           }}
         />

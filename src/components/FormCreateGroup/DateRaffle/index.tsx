@@ -7,8 +7,6 @@ import {
 
 import { format } from 'date-fns';
 import PtBrLocale from 'dayjs/locale/pt-br';
-// import DateTimePicker from '@react-native-community/datetimepicker';
-
 import { useTheme } from 'styled-components';
 
 import { useFormNewGroupStore } from '#/store/formNewGroup/useFormNewGroupStore';
@@ -19,6 +17,7 @@ import {
   Container,
   RowButtons,
   Title,
+  Scroll,
 } from './styles';
 
 interface IProps {
@@ -35,7 +34,6 @@ export const DateRaffle = ({
   const { colors, fonts } = useTheme();
 
   const [date, setDate] = useState(format(new Date(), 'yyyy-MM-dd'));
-  console.tron.log('date: ', date);
 
   const { saveForm, formData } = useFormNewGroupStore();
 
@@ -81,29 +79,31 @@ export const DateRaffle = ({
   };
 
   return (
-    <Container>
-      <Title>Data do sorteio</Title>
+    <Scroll>
+      <Container>
+        <Title>Data do sorteio</Title>
 
-      <CalendarContainer>
-        <DateSelectionCalendar
-          locale={PtBrLocale}
-          minDate={format(new Date(), 'yyyy-MM-dd')}
-          selectedDate={date}
-          onSelectDate={data => setDate(data)}
-          theme={CustomTheme}
-        />
-      </CalendarContainer>
+        <CalendarContainer>
+          <DateSelectionCalendar
+            locale={PtBrLocale}
+            minDate={format(new Date(), 'yyyy-MM-dd')}
+            selectedDate={date}
+            onSelectDate={data => setDate(data)}
+            theme={CustomTheme}
+          />
+        </CalendarContainer>
 
-      <RowButtons>
-        <ButtonNavigate
-          title="Voltar"
-          onPress={() => {
-            previousStep();
-            setCurrentPage(0);
-          }}
-        />
-        <ButtonNavigate title="Próximo" onPress={handleValidFields} />
-      </RowButtons>
-    </Container>
+        <RowButtons>
+          <ButtonNavigate
+            title="Voltar"
+            onPress={() => {
+              previousStep();
+              setCurrentPage(0);
+            }}
+          />
+          <ButtonNavigate title="Próximo" onPress={handleValidFields} />
+        </RowButtons>
+      </Container>
+    </Scroll>
   );
 };

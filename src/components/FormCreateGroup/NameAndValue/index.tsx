@@ -9,7 +9,7 @@ import Input from '#/components/Input';
 import InputMasked from '#/components/Input/Masked';
 import { useFormNewGroupStore } from '#/store/formNewGroup/useFormNewGroupStore';
 
-import { ButtonNext, Container, Title } from './styles';
+import { ButtonNext, Container, Scroll, Title } from './styles';
 
 interface IProps {
   nextStep: () => void;
@@ -55,37 +55,39 @@ export const NameAndValue = ({ nextStep, setCurrentPage }: IProps) => {
   );
 
   return (
-    <Container>
-      <Title>Nome & Valor mínimo</Title>
+    <Scroll>
+      <Container>
+        <Title>Nome & Valor mínimo</Title>
 
-      <Input
-        bgWhite
-        name="name"
-        icon="pencil"
-        placeholder="Nome do grupo"
-        control={control}
-        error={errors.name && errors.name.message}
-      />
+        <Input
+          bgWhite
+          name="name"
+          icon="pencil"
+          placeholder="Nome do grupo"
+          control={control}
+          error={errors.name && errors.name.message}
+        />
 
-      <InputMasked
-        type="money"
-        options={{
-          precision: 2,
-          separator: ',',
-          delimiter: '.',
-          unit: 'R$',
-          suffixUnit: '',
-        }}
-        bgWhite
-        name="valueMin"
-        icon="credit"
-        placeholder="Valor mínimo"
-        control={control}
-        error={errors.valueMin && errors.valueMin.message}
-        setMoneyValue={setMoneyValue}
-      />
+        <InputMasked
+          type="money"
+          options={{
+            precision: 2,
+            separator: ',',
+            delimiter: '.',
+            unit: 'R$',
+            suffixUnit: '',
+          }}
+          bgWhite
+          name="valueMin"
+          icon="credit"
+          placeholder="Valor mínimo"
+          control={control}
+          error={errors.valueMin && errors.valueMin.message}
+          setMoneyValue={setMoneyValue}
+        />
 
-      <ButtonNext title="Próximo" onPress={handleSubmit(handleValidFields)} />
-    </Container>
+        <ButtonNext title="Próximo" onPress={handleSubmit(handleValidFields)} />
+      </Container>
+    </Scroll>
   );
 };

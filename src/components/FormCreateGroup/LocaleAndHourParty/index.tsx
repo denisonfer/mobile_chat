@@ -8,7 +8,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import * as yup from 'yup';
 
 import { format } from 'date-fns';
-import { utcToZonedTime } from 'date-fns-tz';
+import { formatInTimeZone } from 'date-fns-tz';
 import PtBr from 'date-fns/locale/pt-BR';
 
 import Input from '#/components/Input';
@@ -20,6 +20,7 @@ import {
   RowButtons,
   ButtonNavigate,
   ButtonTimePicker,
+  Scroll,
 } from './styles';
 
 interface IProps {
@@ -52,11 +53,6 @@ export const LocaleAndHourParty = ({
   const { saveForm, formData } = useFormNewGroupStore();
 
   const [hour, setHour] = useState(new Date());
-  console.tron.log('hour: ', hour);
-  console.tron.log(
-    'hour timezone: ',
-    utcToZonedTime(hour, 'America/Fortaleza'),
-  );
   const [showPickerTime, setShowPickerTime] = useState(false);
   const [hourSelected, setHourSelected] = useState(false);
 
@@ -83,76 +79,76 @@ export const LocaleAndHourParty = ({
         locale_party: form.locale,
       };
 
-      console.tron.log('dataForm', dataForm);
+      saveForm(dataForm);
 
-      // saveForm(dataForm);
-
-      // nextStep();
-      // setCurrentPage(4);
+      nextStep();
+      setCurrentPage(4);
     },
     [hour],
   );
 
   return (
-    <Container>
-      <Title>Local & Hora da festa</Title>
+    <Scroll>
+      <Container>
+        <Title>Local & Hora da festa</Title>
 
-      <Input
-        bgWhite
-        name="locale"
-        icon="location"
-        placeholder="Local da festa"
-        control={control}
-        error={errors.locale && errors.locale.message}
-      />
+        <Input
+          bgWhite
+          name="locale"
+          icon="location"
+          placeholder="Local da festa"
+          control={control}
+          error={errors.locale && errors.locale.message}
+        />
 
-      {Platform.OS === 'android' && (
-        <>
-          <ButtonTimePicker
-            isOutline
-            title={
-              hourSelected
-                ? format(hour, 'HH:mm', { locale: PtBr })
-                : 'Selecionar Hora'
-            }
-            onPress={() => setShowPickerTime(true)}
-          />
-
-          {showPickerTime && (
-            <DateTimePicker
-              value={hour}
-              mode="time"
-              is24Hour
-              display="spinner"
-              onChange={onChangeHour}
+        {Platform.OS === 'android' && (
+          <>
+            <ButtonTimePicker
+              isOutline
+              title={
+                hourSelected
+                  ? format(hour, 'HH:mm', { locale: PtBr })
+                  : 'Selecionar Hora'
+              }
+              onPress={() => setShowPickerTime(true)}
             />
-          )}
-        </>
-      )}
 
-      {Platform.OS === 'ios' && (
-        <DateTimePicker
-          value={hour}
-          mode="time"
-          is24Hour
-          display="spinner"
-          onChange={onChangeHour}
-        />
-      )}
+            {showPickerTime && (
+              <DateTimePicker
+                value={hour}
+                mode="time"
+                is24Hour
+                display="spinner"
+                onChange={onChangeHour}
+              />
+            )}
+          </>
+        )}
 
-      <RowButtons>
-        <ButtonNavigate
-          title="Voltar"
-          onPress={() => {
-            previousStep();
-            setCurrentPage(2);
-          }}
-        />
-        <ButtonNavigate
-          title="Próximo"
-          onPress={handleSubmit(handleValidFields)}
-        />
-      </RowButtons>
-    </Container>
+        {Platform.OS === 'ios' && (
+          <DateTimePicker
+            value={hour}
+            mode="time"
+            is24Hour
+            display="spinner"
+            onChange={onChangeHour}
+          />
+        )}
+
+        <RowButtons>
+          <ButtonNavigate
+            title="Voltar"
+            onPress={() => {
+              previousStep();
+              setCurrentPage(2);
+            }}
+          />
+          <ButtonNavigate
+            title="Próximo"
+            onPress={handleSubmit(handleValidFields)}
+          />
+        </RowButtons>
+      </Container>
+    </Scroll>
   );
 };
