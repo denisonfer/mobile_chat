@@ -1,30 +1,52 @@
 import React, {
+  Dispatch,
   forwardRef,
+  SetStateAction,
   useCallback,
   useImperativeHandle,
   useRef,
   useState,
 } from 'react';
 import { Control, Controller } from 'react-hook-form';
-import { TextInputProps } from 'react-native';
+import {
+  TextInputMaskProps,
+  TextInputMaskTypeProp,
+} from 'react-native-masked-text';
 
-import { Container, Error, Icon, InputText } from './styles';
+import { Container, Error, Icon, InputTextMasked } from '../styles';
 
-interface IInputProps extends TextInputProps {
+interface IInputProps extends TextInputMaskProps {
   icon: string | null;
   control: Control;
   name: string;
   error: string;
-  hidePass?: boolean;
-  setHidePass?: (value: boolean) => void;
   bgWhite?: boolean;
+  type: TextInputMaskTypeProp;
+  setMoneyValue: Dispatch<SetStateAction<number>>;
+  options?: {
+    precision: number;
+    separator: string;
+    delimiter: string;
+    unit: string;
+    suffixUnit: string;
+  };
 }
 interface IInputRef {
   focus(): void;
 }
 
-const Input: React.ForwardRefRenderFunction<IInputRef, IInputProps> = (
-  { icon, control, name, error, hidePass, setHidePass, bgWhite, ...rest },
+const InputMasked: React.ForwardRefRenderFunction<IInputRef, IInputProps> = (
+  {
+    icon,
+    control,
+    name,
+    error,
+    bgWhite,
+    type,
+    options,
+    setMoneyValue,
+    ...rest
+  },
   ref,
 ) => {
   const inputElementRef = useRef<any>(null);
@@ -56,21 +78,22 @@ const Input: React.ForwardRefRenderFunction<IInputRef, IInputProps> = (
           render={({ field: { onChange, value } }) => (
             <>
               {icon && <Icon bgWhite={bgWhite} name={icon} size={26} />}
-              <InputText
+              <InputTextMasked
+                type={type}
+                options={options}
                 ref={inputElementRef}
-                onChangeText={onChange}
+                includeRawValueInChangeText
+                onChangeText={(text, rawValue) => {
+                  onChange(text);
+                  if (!rawValue) return;
+                  setMoneyValue(Number(rawValue));
+                }}
                 onFocus={handleOnFocus}
                 onBlur={handleOnFilled}
                 value={value}
                 bgWhite={bgWhite}
                 {...rest}
               />
-              {name === 'password' && (
-                <Icon
-                  name={hidePass ? 'eye' : 'eye-with-line'}
-                  onPress={() => setHidePass(!hidePass)}
-                />
-              )}
             </>
           )}
         />
@@ -81,4 +104,4 @@ const Input: React.ForwardRefRenderFunction<IInputRef, IInputProps> = (
   );
 };
 
-export default forwardRef(Input);
+export default forwardRef(InputMasked);

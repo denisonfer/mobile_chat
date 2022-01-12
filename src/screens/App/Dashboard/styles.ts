@@ -1,6 +1,6 @@
 import { Platform, ScrollView } from 'react-native';
-import AnimatedLinearGradient from 'react-native-animated-linear-gradient';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+import IconFA from 'react-native-vector-icons/FontAwesome';
 
 import styled from 'styled-components/native';
 
@@ -11,33 +11,6 @@ interface IShapeStatus {
 export const Container = styled.View`
   flex: 1;
   background: ${({ theme }) => theme.colors.BACKGROUND};
-`;
-
-export const Header = styled.View`
-  background: ${({ theme }) => theme.colors.BACKGROUND};
-  height: ${RFPercentage(20)}px;
-`;
-
-export const Gradient = styled(AnimatedLinearGradient).attrs(({ theme }) => ({
-  customColors: [
-    theme.colors.GRADIENT_COLOR_1,
-    theme.colors.GRADIENT_COLOR_2,
-    theme.colors.GRADIENT_COLOR_3,
-  ],
-  start: { x: 0, y: 0 },
-  end: { x: 0, y: 1 },
-}))`
-  position: relative;
-`;
-
-export const NameUser = styled.Text`
-  color: ${({ theme }) => theme.colors.TEXT_WHITE};
-  font-size: ${RFValue(20)}px;
-  font-family: ${({ theme }) => theme.fonts.BOLD};
-  margin-left: 20px;
-  position: absolute;
-  bottom: 0;
-  left: 0;
 `;
 
 export const Scroll = styled(ScrollView).attrs({
@@ -56,12 +29,16 @@ export const ButtonCreateGroup = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   background: ${({ theme }) => theme.colors.BACKGROUND};
-  border-radius: 200px;
-  width: ${RFValue(60)}px;
-  height: ${RFValue(60)}px;
+  border-radius: ${RFValue(200)}px;
+  width: ${RFValue(50)}px;
+  height: ${RFValue(50)}px;
   margin-top: ${RFValue(-30)}px;
   margin-right: 20px;
   align-self: flex-end;
+`;
+
+export const Icon = styled(IconFA)`
+  font-size: ${RFValue(50)}px;
 `;
 
 export const ButtonGroupContainer = styled.TouchableOpacity<IShapeStatus>`

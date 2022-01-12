@@ -2,9 +2,10 @@ import { RFValue, RFPercentage } from 'react-native-responsive-fontsize';
 
 import styled from 'styled-components/native';
 
+import Button from '#/components/Button';
+
 export const Container = styled.View`
-  flex: 1;
-  background: ${({ theme }) => theme.colors.BACKGROUND};
+  padding: 20px;
 `;
 
 export const Title = styled.Text`
@@ -12,12 +13,9 @@ export const Title = styled.Text`
   font-family: ${({ theme }) => theme.fonts.REGULAR};
   font-weight: 500;
   color: ${({ theme }) => theme.colors.TITLE};
+  margin-bottom: 36px;
 `;
 
-export const Content = styled.View`
-  flex: 1;
-`;
-
-export const ContainerSteps = styled.View`
-  margin-top: 10px;
+export const ButtonNext = styled(Button)`
+  margin-top: ${RFPercentage(30)}px;
 `;

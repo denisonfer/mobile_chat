@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { useNavigation } from '@react-navigation/native';
 
+import Header from '#/components/Header';
+import useThemeStore from '#/store/theme/useTheme';
 import { useUserStore } from '#/store/user/useUserStore';
 
 import {
   Container,
   ButtonCreateGroup,
+  Icon,
   Content,
-  Gradient,
-  Header,
-  NameUser,
   ButtonGroupContainer,
   GroupName,
   Row,
@@ -25,6 +24,7 @@ import {
 export const DashboardScreen = () => {
   const { navigate } = useNavigation();
   const { user } = useUserStore();
+  const { isDarkTheme } = useThemeStore();
 
   const [groups, setGroups] = useState([
     {
@@ -95,14 +95,10 @@ export const DashboardScreen = () => {
   return (
     <Container>
       <StatusBar backgroundColor="#5200FF" />
-      <Header>
-        <Gradient>
-          <NameUser>Olá, {user?.name}</NameUser>
-        </Gradient>
-      </Header>
+      <Header title={`Olá, ${user?.name}`} />
 
       <ButtonCreateGroup onPress={() => navigate('CreateGroupScreen')}>
-        <Icon name="plus-circle" size={60} color="white" />
+        <Icon name="plus-circle" color={isDarkTheme ? '#f2f2f2' : '#5200FF'} />
       </ButtonCreateGroup>
 
       <Scroll>
