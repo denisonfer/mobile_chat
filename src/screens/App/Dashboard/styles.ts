@@ -5,7 +5,7 @@ import IconFA from 'react-native-vector-icons/FontAwesome';
 import styled from 'styled-components/native';
 
 interface IShapeStatus {
-  status: string;
+  status: number;
 }
 
 export const Container = styled.View`
@@ -48,9 +48,9 @@ export const ButtonGroupContainer = styled.TouchableOpacity<IShapeStatus>`
   border-bottom-right-radius: 10px;
   border-right-width: 7px;
   border-right-color: ${({ theme, status }) =>
-    status === '1'
+    status === 1
       ? theme.colors.STATUS_FASE_1
-      : status === '2'
+      : status === 2
       ? theme.colors.STATUS_FASE_2
       : theme.colors.STATUS_FASE_3};
   margin-bottom: 16px;
@@ -72,9 +72,9 @@ export const ShapeStatus = styled.View<IShapeStatus>`
   border-bottom-left-radius: 10px;
   border-top-right-radius: 10px;
   background: ${({ theme, status }) =>
-    status === '1'
+    status === 1
       ? theme.colors.STATUS_FASE_1
-      : status === '2'
+      : status === 2
       ? theme.colors.STATUS_FASE_2
       : theme.colors.STATUS_FASE_3};
   padding: 6px 8px;

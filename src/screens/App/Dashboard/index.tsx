@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { StatusBar } from 'react-native';
 
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 import Header from '#/components/Header';
+import {
+  IGroupsData,
+  loadGroupsRequest,
+} from '#/services/requests/Group/loadGroups.request';
 import useThemeStore from '#/store/theme/useTheme';
 import { useUserStore } from '#/store/user/useUserStore';
 
@@ -26,71 +30,23 @@ export const DashboardScreen = () => {
   const { user } = useUserStore();
   const { isDarkTheme } = useThemeStore();
 
-  const [groups, setGroups] = useState([
-    {
-      id: '1',
-      name: 'Grupo dos amigos',
-      members_quantity: 14,
-      status: {
-        id: '1',
-        title: 'Aguardando sorteio',
-      },
-    },
-    {
-      id: '2',
-      name: 'Grupo da academia',
-      members_quantity: 8,
-      status: {
-        id: '2',
-        title: 'Sorteio realizado',
-      },
-    },
-    {
-      id: '3',
-      name: 'Grupo do trabalho',
-      members_quantity: 26,
-      status: {
-        id: '3',
-        title: 'Evento realizado',
-      },
-    },
-    {
-      id: '4',
-      name: 'Grupo da igreja',
-      members_quantity: 44,
-      status: {
-        id: '3',
-        title: 'Evento realizado',
-      },
-    },
-    {
-      id: '5',
-      name: 'Grupo do Muay Thai',
-      members_quantity: 44,
-      status: {
-        id: '2',
-        title: 'Sorteio realizado',
-      },
-    },
-    {
-      id: '6',
-      name: 'Grupo do Muay Thai',
-      members_quantity: 44,
-      status: {
-        id: '2',
-        title: 'Sorteio realizado',
-      },
-    },
-    {
-      id: '7',
-      name: 'Grupo do Muay Thai',
-      members_quantity: 44,
-      status: {
-        id: '2',
-        title: 'Sorteio realizado',
-      },
-    },
-  ]);
+  const [groups, setGroups] = useState<IGroupsData[]>([]);
+
+  useFocusEffect(
+    useCallback(() => {
+      async function loadGroups() {
+        const response = await loadGroupsRequest();
+
+        if (!response) {
+          return;
+        }
+
+        setGroups(response);
+      }
+
+      loadGroups();
+    }, []),
+  );
 
   return (
     <Container>
@@ -106,17 +62,17 @@ export const DashboardScreen = () => {
           {groups.map(group => (
             <ButtonGroupContainer
               key={group.id}
-              status={group.status.id}
+              status={group.status_group_id}
               onPress={() => navigate('GroupStackScreen', { group })}
             >
               <GroupName>{group.name}</GroupName>
 
               <Row>
-                <ShapeStatus status={group.status.id}>
-                  <Status>{group.status.title}</Status>
+                <ShapeStatus status={group.status_group_id}>
+                  <Status>{group.status_group_title}</Status>
                 </ShapeStatus>
 
-                <Info>{group.members_quantity} participantes</Info>
+                <Info>{group.members_qtd} participantes</Info>
               </Row>
             </ButtonGroupContainer>
           ))}

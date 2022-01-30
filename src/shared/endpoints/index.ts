@@ -4,4 +4,5 @@ export default {
   avatar: 'users/avatar', //* SALVAR AVATAR DO USUÁRIO
   password: 'passwords', //* ENVIAR E-MAIL PARA RESET DE SENHA
   createGroup: 'groups', //* CRIAR GRUPO DO USUÁRIO
+  loadGroups: 'groups', //* CARREGAR OS GRUPOS DO USUÁRIO
 };
