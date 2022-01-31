@@ -41,6 +41,19 @@ export const Icon = styled(IconFA)`
   font-size: ${RFValue(50)}px;
 `;
 
+export const ViewNoContent = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const TextNoContent = styled.Text`
+  color: ${({ theme }) => theme.colors.NEUTRAL};
+  font-size: ${RFValue(24)}px;
+  font-family: ${({ theme }) => theme.fonts.BOLD};
+  text-align: center;
+`;
+
 export const ButtonGroupContainer = styled.TouchableOpacity<IShapeStatus>`
   background: #f2f2f2;
   border-radius: 10px;

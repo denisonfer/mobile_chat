@@ -23,6 +23,8 @@ import {
   Status,
   Info,
   Scroll,
+  ViewNoContent,
+  TextNoContent,
 } from './styles';
 
 export const DashboardScreen = () => {
@@ -59,23 +61,33 @@ export const DashboardScreen = () => {
 
       <Scroll>
         <Content>
-          {groups.map(group => (
-            <ButtonGroupContainer
-              key={group.id}
-              status={group.status_group_id}
-              onPress={() => navigate('GroupStackScreen', { group })}
-            >
-              <GroupName>{group.name}</GroupName>
+          {groups.length === 0 ? (
+            <ViewNoContent>
+              <TextNoContent>
+                Você não tem grupo cadastrado, clique no (+) para criar
+              </TextNoContent>
+            </ViewNoContent>
+          ) : (
+            <>
+              {groups.map(group => (
+                <ButtonGroupContainer
+                  key={group.id}
+                  status={group.status_group_id}
+                  onPress={() => navigate('GroupStackScreen', { group })}
+                >
+                  <GroupName>{group.name}</GroupName>
 
-              <Row>
-                <ShapeStatus status={group.status_group_id}>
-                  <Status>{group.status_group_title}</Status>
-                </ShapeStatus>
+                  <Row>
+                    <ShapeStatus status={group.status_group_id}>
+                      <Status>{group.status_group_title}</Status>
+                    </ShapeStatus>
 
-                <Info>{group.members_qtd} participantes</Info>
-              </Row>
-            </ButtonGroupContainer>
-          ))}
+                    <Info>{group.members_qtd} participantes</Info>
+                  </Row>
+                </ButtonGroupContainer>
+              ))}
+            </>
+          )}
         </Content>
       </Scroll>
     </Container>

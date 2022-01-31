@@ -9,7 +9,7 @@ interface IButtonProps extends RectButtonProps {
   isOutline?: boolean;
 }
 
-const Button: React.FC<IButtonProps> = ({ title, isOutline, ...rest }) => {
+const Button = ({ title, isOutline, ...rest }: IButtonProps) => {
   return (
     <Container {...rest} isOutline={isOutline}>
       {isOutline ? (
