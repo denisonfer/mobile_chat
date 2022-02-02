@@ -2,7 +2,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable prefer-destructuring */
 import { NativeModules } from 'react-native';
-import Reactotron from 'reactotron-react-native';
+import Reactotron, { networking } from 'reactotron-react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -14,6 +14,7 @@ if (__DEV__) {
 
   const tron = Reactotron.configure({ host: scriptHostname })
     .useReactNative()
+    .use(networking())
     .connect();
 
   console.tron = tron;

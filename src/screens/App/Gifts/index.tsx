@@ -12,7 +12,16 @@ import { MyActivityIndicator } from '#/components/MyActivityIndicator';
 import { LoadGiftsListRequest } from '#/services/requests/User/LoadGiftsList.request';
 import { SaveGiftsListRequest } from '#/services/requests/User/SaveGiftsList.request';
 
-import { ButtonSubmit, Container, Content, Title, ViewForm } from './styles';
+import {
+  ButtonEdit,
+  ButtonSubmit,
+  Container,
+  Content,
+  IconEdit,
+  TextButton,
+  Title,
+  ViewForm,
+} from './styles';
 
 interface IFormData {
   gift_1: string;
@@ -33,11 +42,14 @@ export const GiftsScreen = () => {
     formState: { errors },
     reset,
     setValue,
+    setFocus,
   } = useForm({
     resolver: yupResolver(schema),
   });
 
   const [loading, setLoading] = useState(false);
+  const [isEditable, setIsEditable] = useState(false);
+  const [showButtonSubmit, setShowButtonSubmit] = useState(true);
 
   useFocusEffect(
     useCallback(() => {
@@ -47,6 +59,8 @@ export const GiftsScreen = () => {
 
         if (!response) {
           setLoading(false);
+          setIsEditable(false);
+          setShowButtonSubmit(true);
           return;
         }
 
@@ -57,6 +71,8 @@ export const GiftsScreen = () => {
         setValue('gift_3', gift_3);
 
         setLoading(false);
+        setIsEditable(true);
+        setShowButtonSubmit(false);
       }
 
       loadGiftsList();
@@ -75,6 +91,12 @@ export const GiftsScreen = () => {
     reset();
   }, []);
 
+  const handleAbilityEdition = useCallback(() => {
+    setIsEditable(!isEditable);
+    setShowButtonSubmit(true);
+    setFocus('gift_1');
+  }, [isEditable]);
+
   return (
     <Container>
       {loading && <MyActivityIndicator />}
@@ -82,7 +104,14 @@ export const GiftsScreen = () => {
       <Header title="Lista de desejos" />
 
       <Content>
-        <Title>Informe suas opções de presentes</Title>
+        {isEditable ? (
+          <ButtonEdit onPress={handleAbilityEdition}>
+            <IconEdit name="edit" />
+            <TextButton>Habilitar edição</TextButton>
+          </ButtonEdit>
+        ) : (
+          <Title>Informe suas opções de presentes</Title>
+        )}
 
         <ViewForm>
           <Input
@@ -91,6 +120,8 @@ export const GiftsScreen = () => {
             placeholder="Opção 1 de presente"
             control={control}
             error={errors.gift_1 && errors.gift_1.message}
+            bgWhite
+            editable={showButtonSubmit}
           />
 
           <Input
@@ -99,6 +130,8 @@ export const GiftsScreen = () => {
             placeholder="Opção 2 de presente"
             control={control}
             error={errors.gift_2 && errors.gift_2.message}
+            bgWhite
+            editable={showButtonSubmit}
           />
 
           <Input
@@ -107,12 +140,16 @@ export const GiftsScreen = () => {
             placeholder="Opção 3 de presente"
             control={control}
             error={errors.gift_3 && errors.gift_3.message}
+            bgWhite
+            editable={showButtonSubmit}
           />
 
-          <ButtonSubmit
-            title="Enviar lista"
-            onPress={handleSubmit(handleSubmitGiftList)}
-          />
+          {showButtonSubmit && (
+            <ButtonSubmit
+              title="Enviar lista"
+              onPress={() => handleSubmit(handleSubmitGiftList)}
+            />
+          )}
         </ViewForm>
       </Content>
     </Container>

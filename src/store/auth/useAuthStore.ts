@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
 
+import { api } from '#/services/api';
 import { IUser } from '#/shared/interfaces/IUser';
 
 import { authActionsSlice } from './authActionsSlice';
@@ -43,6 +44,15 @@ export const useAuthStore = create<AuthStates>(
       //* ACTIONS
       ...authActionsSlice(set, get),
     }),
-    { name: '@authState', getStorage: () => AsyncStorage },
+    {
+      name: '@authState',
+      getStorage: () => AsyncStorage,
+      onRehydrateStorage: () => state => {
+        if (state?.token)
+          api.defaults.headers.common = {
+            Authorization: `Bearer ${state.token}`,
+          };
+      },
+    },
   ),
 );

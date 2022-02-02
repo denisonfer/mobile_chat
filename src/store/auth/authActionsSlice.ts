@@ -28,7 +28,7 @@ export const authActionsSlice = (
       });
       const { user, token } = response.data;
 
-      api.defaults.headers.Authorization = `Bearer ${token}`;
+      api.defaults.headers.common = { Authorization: `Bearer ${token}` };
 
       set(() => ({ loading: false, token, isSigned: true }));
       return user;

@@ -5,14 +5,17 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ThemeProvider } from 'styled-components';
 
 import Routes from './routes';
+import { api } from './services/api';
 import useThemeStore from './store/theme/useTheme';
 
 const App: React.FC = function () {
   const { currentTheme, setTheme } = useThemeStore();
 
   useEffect(() => {
+    const themeOfDevice = Appearance.getColorScheme();
+    setTheme(themeOfDevice);
+
     const themeListener = Appearance.addChangeListener(theme => {
-      if (!theme.colorScheme) setTheme('light');
       setTheme(theme.colorScheme);
     });
 
