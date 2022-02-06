@@ -1,10 +1,9 @@
-/* eslint-disable react/require-default-props */
 import React from 'react';
-import { RectButtonProps } from 'react-native-gesture-handler';
+import { TouchableOpacityProps } from 'react-native';
 
 import { Container, Gradient, TextButton } from './styles';
 
-interface IButtonProps extends RectButtonProps {
+interface IButtonProps extends TouchableOpacityProps {
   title: string;
   isOutline?: boolean;
 }

@@ -1,11 +1,11 @@
+import { TouchableOpacity } from 'react-native';
 import { createAnimatableComponent } from 'react-native-animatable';
-import { RectButton } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 import styled, { css } from 'styled-components/native';
 
-const ButtonAnimatable = createAnimatableComponent(RectButton);
+const ButtonAnimatable = createAnimatableComponent(TouchableOpacity);
 interface IButtonProps {
   isOutline?: boolean;
 }

@@ -1,9 +1,16 @@
+import { ScrollView } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import IconEntypo from 'react-native-vector-icons/Entypo';
 
 import styled from 'styled-components/native';
 
 import Button from '#/components/Button';
+
+export const Scroll = styled(ScrollView).attrs({
+  contentContainerStyle: { flexGrow: 1 },
+  keyboardShouldPersistTaps: 'handled',
+  showsVerticalScrollIndicator: false,
+})``;
 
 export const Container = styled.View`
   flex: 1;
@@ -14,7 +21,7 @@ export const ButtonEdit = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  border: 2px solid ${({ theme }) => theme.colors.TITLE};
+  border: 1px solid ${({ theme }) => theme.colors.TITLE};
   border-radius: 4px;
   width: ${RFValue(200)}px;
   padding: 8px 16px;

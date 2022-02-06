@@ -7,4 +7,5 @@ export default {
   loadGroups: 'groups', //* CARREGAR OS GRUPOS DO USUÁRIO
   createGiftsList: 'gifts', //* CRIA A LISTA DE DESEJOS DO USUÁRIO
   loadGiftsList: 'gifts', //* CARREGA A LISTA DE DESEJOS DO USUÁRIO
+  updateGiftsList: 'gifts', //* ATUALIZA A LISTA DE DESEJOS DO USUÁRIO
 };

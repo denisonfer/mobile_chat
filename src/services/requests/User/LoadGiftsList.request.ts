@@ -14,6 +14,9 @@ export async function LoadGiftsListRequest(): Promise<IGift | undefined> {
   } catch (error) {
     console.tron.log('[SAVE GIFTS LIST REQUEST ERROR]::', error);
     if (axios.isAxiosError(error)) {
+      if (error.response?.status === 400) {
+        return;
+      }
       showMessage({
         message: `${error.response?.data.message}`,
         type: 'danger',
