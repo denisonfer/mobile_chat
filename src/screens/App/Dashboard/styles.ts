@@ -1,8 +1,12 @@
 import { Platform, ScrollView } from 'react-native';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import IconFA from 'react-native-vector-icons/FontAwesome';
+import IconIO from 'react-native-vector-icons/Ionicons';
 
 import styled from 'styled-components/native';
+
+import Button from '#/components/Button';
+import Input from '#/components/Input';
 
 interface IShapeStatus {
   status: number;
@@ -23,6 +27,18 @@ export const Content = styled.View`
   flex: 1;
   padding: 20px 20px ${Platform.OS === 'ios' ? 140 : 0}px 20px;
   margin-top: 36px;
+`;
+
+export const ButtonEnterGroup = styled.TouchableOpacity`
+  width: ${RFValue(50)}px;
+  height: ${RFValue(50)}px;
+  position: absolute;
+  right: 20px;
+  top: ${RFValue(20)}px;
+`;
+
+export const IconEnterInGroup = styled(IconIO)`
+  font-size: ${RFValue(40)}px;
 `;
 
 export const ButtonCreateGroup = styled.TouchableOpacity`
@@ -104,4 +120,20 @@ export const Info = styled.Text`
   font-size: ${RFValue(14)}px;
   font-family: ${({ theme }) => theme.fonts.REGULAR};
   margin-left: 16px;
+`;
+
+export const ContainerEnterInGroup = styled.View`
+  padding: 36px;
+`;
+
+export const Title = styled.Text`
+  color: ${({ theme }) => theme.colors.PRIMARY};
+  font-size: ${RFValue(18)}px;
+  font-family: ${({ theme }) => theme.fonts.BOLD};
+`;
+
+export const InputInviteCode = styled(Input)``;
+
+export const ButtonSendInviteCode = styled(Button)`
+  margin: 16px 0 48px 0;
 `;

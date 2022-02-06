@@ -5,6 +5,7 @@ export default {
   password: 'passwords', //* ENVIAR E-MAIL PARA RESET DE SENHA
   createGroup: 'groups', //* CRIAR GRUPO DO USUÁRIO
   loadGroups: 'groups', //* CARREGAR OS GRUPOS DO USUÁRIO
+  addUserInGroup: '/users/groups', //* ADICIONA O USUÁRIO NO GRUPO
   createGiftsList: 'gifts', //* CRIA A LISTA DE DESEJOS DO USUÁRIO
   loadGiftsList: 'gifts', //* CARREGA A LISTA DE DESEJOS DO USUÁRIO
   updateGiftsList: 'gifts', //* ATUALIZA A LISTA DE DESEJOS DO USUÁRIO
